@@ -41,6 +41,31 @@
 	"asset" : "/content/dam/nike/sales/multimedia/2014/9/11/8/18/rename-completely-new-asset.jpg"
 }
 
+#### localhost:5000/services/DamUploader/modifyFile
+{
+	"authenticationServiceEndPoint" : "",
+	"username" : "",
+	"password" : "",
+	"host" : "",
+	"port" : "",
+
+	"asset" : {
+		"path" : "/content/dam/nike/sales/multimedia/2014/9/10/16/18/back-to-start.jpg",
+		"rename" : "rename-back-to-start.jpg",
+		"meta" : {
+			"tags" : "nike-asset-library:audience/nikeinternal",
+			"description" : "Example file upload",
+			"styles" : "123456",
+			"stylecolors" : "123456-123",
+			"collections" : "No",	
+			"description" : "this is an example asset upload",
+			"language" : "EN",
+			"expirationDate" : "2015-12-11T08:00:00.000Z",
+			"availableDate" : "2014-12-11T08:00:00.000Z"			
+		}
+	}
+}
+
 # example GET request to make sure whatever is calling this can see the service
 
 http://localhost:5000/example-assets/483707-010-PHSBH001.jpg

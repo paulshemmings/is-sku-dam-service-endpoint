@@ -12,7 +12,8 @@ var Modifier = {
 		if (!json.host || json.host == "") return "No host specified for DAM service endpoint";
 		if (!json.port || json.port == "") return "No port specified for DAM service endpoint";
 		if (!json.asset || json.asset == "") return "No asset defined";
-		if (!json.meta || json.meta == "") return "No asset meta-data defined";
+		if (!json.asset.path || json.asset.path == "") return "No asset defined";
+		if (!json.asset.meta || json.asset.meta == "") return "No asset meta-data defined";
 		
 		return ("success");
 	}, 	
@@ -39,10 +40,10 @@ var Modifier = {
 				+ param.host
 				+ ':' + param.port
 				+ '/bin/assetlibrary/api-assetmodify'
-		    	+ '?assetPath=' + param.asset;				
+		    	+ '?assetPath=' + param.asset.path;				
 
-		    if(param.assetNewName) {
-		    	requestUrl += "&assetNewName=" + param.assetNewName;
+		    if(param.asset.rename) {
+		    	requestUrl += "&assetNewName=" + param.asset.rename;
 		    }
 
 		   	var options = {
@@ -58,21 +59,7 @@ var Modifier = {
 		   			username : "admin",
 		   			password : "admin"
 		   		};
-		   	}		   	
-
-		   	/*
-		   	var metaData = {
-				"tags" : param.meta.tags,
-				"description" : param.meta.description,
-				"styles" : param.meta.styles,
-				"stylecolors" : param.meta.stylecolors,
-				"collections" : param.meta.collections,	
-				"description" : param.meta.description,
-				"language" : param.meta.language,
-				"expirationDate" : param.meta.expirationDate,
-				"availableDate" : param.meta.availableDate,
-		   	};
-		   	*/
+		   	}
 
 		   	function responseHandler(error, response, body) {
 				if(error) { 
@@ -88,7 +75,7 @@ var Modifier = {
 		   	}
 
 		    console.log('modify asset: ', requestUrl);
-			self.request.post(options, responseHandler).form(param.meta);			
+			self.request.post(options, responseHandler).form(param.asset.meta);			
 
 		});
 	},
