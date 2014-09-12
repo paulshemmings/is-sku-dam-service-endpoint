@@ -191,7 +191,7 @@ var Uploader = {
 		var self = this;		
 		console.log('authenticate: ', param.username);
 		console.log('using endpoint: ', param.authenticationServiceEndPoint);
-		authenticator.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(err, cookieJar) {
+		this.authenticator.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(err, cookieJar) {
 
 			if(err || !cookieJar.getCookies) {
 				return callback(err);

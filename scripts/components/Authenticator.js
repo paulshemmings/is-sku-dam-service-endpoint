@@ -26,7 +26,8 @@ var Authenticator = {
 
 		}, function(error, response, body) {		
 	        if(error) {
-	            return callback(error);
+	        	console.error(error);
+	            return callback("failed to authenticate");
 	        }      
 	        console.log('authentication returned: [' + response.statusCode + '] ', response.body);        
 	        return callback("", cookieJar);
