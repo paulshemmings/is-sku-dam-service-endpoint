@@ -1,10 +1,9 @@
 var DamUploader = {
 
 	extensions : require('../helpers/Extensions'),
-	damHelper : require('../helpers/DamHelper'),
-
 	detailer : require('../components/Detailer'),
 	modifier : require('../components/Modifier'),
+	uploader : require('../components/Uploader'),
 
 	/*
 	 * Upload or update an asset
@@ -12,19 +11,19 @@ var DamUploader = {
 
 	uploadFile : function(req, res, path, content) {
 
-		var requestJSON = JSON.parse(content);
-		if (requestJSON == "") {
+		if (content == "") {
 			res.end("no JSON submitted in form");
 			return;
-		}
+		}	
 
-		var parseJson = this.damHelper.validateJson(requestJSON)
+		var requestJSON = JSON.parse(content);
+		var parseJson = this.uploader.validateRequest(requestJSON)
 		if ( parseJson != "success") {
 			res.end("Failed to validate json: " + parseJson);
 			return;
 		}
 		
-		this.damHelper.uploadAsset(requestJSON, function(response) {
+		this.uploader.uploadAsset(requestJSON, function(response) {
 			res.writeHead(200, {
 				'Content-Type': 'application/json'
 			});						
