@@ -182,12 +182,10 @@ var DamHelper = {
 
 		}, function(error, response, body) {		
 	        if(error) {
-	            return console.error(error);
-	        }
-			if(cookieJar.getCookies('https://www.nike.net').length == 0) {
-				return console.log("Authentication failed");
-			}                
-	        return callback(cookieJar);
+	            return callback(error);
+	        }      
+	        console.log('authentication returned: [' + response.statusCode + '] ', response.body);        
+	        return callback("", cookieJar);
 		});
 	},
 
@@ -220,10 +218,14 @@ var DamHelper = {
 	uploadAsset : function(param, callback) {
 
 		// get the authenticaion cookies
-		var self = this;
+		var self = this;		
 		console.log('authenticate: ', param.username);
-		self.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(cookieJar) {
+		console.log('using endpoint: ', param.authenticationServiceEndPoint);
+		self.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(err, cookieJar) {
 
+			if(err || !cookieJar.getCookies) {
+				return callback(err);
+			}
 			var cookieLength = cookieJar.getCookies('https://www.nike.net').length;
 			console.log('authentication returned ' + cookieLength + ' cookies');	
 			if (cookieLength < 1) {
@@ -320,8 +322,13 @@ var DamHelper = {
 	getAsset : function(param, callback) {
 		var self = this;
 		console.log('authenticate: ', param.username);
-		self.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(cookieJar) {
+		console.log('using endpoint: ', param.authenticationServiceEndPoint);
+		self.generateAuthenticationCookies(param.username, param.password, param.authenticationServiceEndPoint, function(err, cookieJar) {
 
+			if(err || !cookieJar.getCookies) {
+				return callback(err);
+			}
+			
 			var cookieLength = cookieJar.getCookies('https://www.nike.net').length;
 			console.log('authentication returned ' + cookieLength + ' cookies');	
 			if (cookieLength < 1) {

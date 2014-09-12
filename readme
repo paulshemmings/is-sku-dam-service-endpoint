@@ -1,15 +1,13 @@
-# example JSON string to pass to service. This is a POST request, so this is in the body of the request
+# Instructions
 
-######### uploadFile parameters ##########
 
-# if you do not provide a "name" for the asset, it will take the name of the file you provide
-# if you DO not provide a "rename" for the asset, and an asset with "name" already exists, it will be replaced.
-# if you DO provide a "rename" for the asset, and an asset with "name" exists, it will replace, then rename that asset.
-
+#### localhost:5000/services/DamUploader/uploadFile
 {
 	"authenticationServiceEndPoint" : "",
 	"username" : "",
 	"password" : "",
+	"host" : "",
+	"port" : "",	
 
 	"tags" : "nike-asset-library:audience/nikeinternal",
 	"description" : "Example file upload",
@@ -18,11 +16,8 @@
 	"collections" : "No",	
 	"description" : "this is an example asset upload",
 	"language" : "EN",
-	"expirationDate" : "2099-12-12",
-	"availableDate" : "2014-10-01",	
-
-	"host" : "",
-	"port" : "",
+	"expirationDate" : "2015-12-11T08:00:00.000Z",
+	"availableDate" : "2014-12-11T08:00:00.000Z",
 
 	"asset" : {
 		"path" : "/Users/phemmings/Projects/_mine/node-js/simple-dam-reader-service/example-assets/483707-010-PHSBH001.jpg",
@@ -31,21 +26,20 @@
 	} 
 }
 
-######### getFile parameters ##########
+## Note
+# if you do not provide a "name" for the asset, it will take the name of the file you provide
+# if you DO not provide a "rename" for the asset, and an asset with "name" already exists, it will be replaced.
+# if you DO provide a "rename" for the asset, and an asset with "name" exists, it will replace, then rename that asset.
 
+#### localhost:5000/services/DamUploader/getFile
 {
 	"authenticationServiceEndPoint" : "",
 	"username" : "",
 	"password" : "",
-	"asset" : "/content/dam/nike/sales/multimedia/2014/9/11/8/18/rename-completely-new-asset.jpg",
 	"host" : "",
-	"port" : ""
+	"port" : "",
+	"asset" : "/content/dam/nike/sales/multimedia/2014/9/11/8/18/rename-completely-new-asset.jpg"
 }
-
-# example service endpoint
-
-localhost:5000/services/DamUploader/uploadFile
-localhost:5000/services/DamUploader/getFile
 
 # example GET request to make sure whatever is calling this can see the service
 
@@ -53,5 +47,6 @@ http://localhost:5000/example-assets/483707-010-PHSBH001.jpg
 
 # how to run the service
 
-> npm install
+> npm install (first time only)
+
 > node ./scripts/web-server.js 
