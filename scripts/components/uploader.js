@@ -77,11 +77,34 @@ var Uploader = {
 			+ (overriding == "false" ? "" : "&existingAsset=" + encodeURIComponent(assetPath + "/" + assetName));
 	},
 
+	generateDateValue : function(date) {
+		// YYYY-MM-DDThh:mm:ss.SSSTZD
+		function padLeft(d) {
+			return "00".substring(0, "00".length - d.toString().length) + d.toString();
+		};
+		return 	date.getFullYear()
+				+ '-' + 
+				padLeft(date.getMonth()+1)
+				+ '-' + 
+				padLeft(date.getDate())
+				+ 'T' + 
+				padLeft(date.getHours())
+				+ ':' +
+				padLeft(date.getMinutes())
+				+ ':01.000Z';
+	},
+
 	generateMetaData : function(meta) {
 
 		var now = new Date();
+
+		var availDate = new Date();
+		availDate.setDate(now.getDate()-1);
+
 		var expDate = new Date();
 		expDate.setMonth(now.getMonth() + 18);
+
+		console.log('wtf: ', this.generateDateValue(expDate));
 
 		return  {
 	        tags: meta.tags,
@@ -90,8 +113,9 @@ var Uploader = {
 	        styleColors: meta.styleColors || "",
 	        description: meta.description || "",
 	        language: meta.language || "EN",
-	        expirationDate: meta.expirationDate ||  expDate.getFullYear() + '-' + expDate.getMonth() + '-' + expDate.getDate(),
-	        availableDate: meta.availableDate || now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate()
+	        keywords : meta.keywords ||"",
+	        expirationDate: meta.expirationDate || this.generateDateValue(expDate),
+	        availableDate: meta.availableDate || this.generateDateValue(availDate)
 	    };
 	},
 
